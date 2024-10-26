@@ -1,9 +1,9 @@
-import ResultsDashboard from "./Pages/Result";
 import "./App.css";
+import Navigation from "./router/Navigation";
 const App = () => {
   return (
     <>
-      <ResultsDashboard />
+      <Navigation />
     </>
   );
 };

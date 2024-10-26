@@ -1,0 +1,49 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+}
+
+.welcome-container h1 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.welcome-container h2 {
+  font-size: 1.2em;
+  color: #555;
+}
+
+.student-list {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.student-card {
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  font-size: 1.1em;
+}
+
+.results-button {
+  margin-top: 30px;
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.results-button:hover {
+  background-color: #0056b3;
+}
