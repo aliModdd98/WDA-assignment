@@ -1,0 +1,8 @@
+#root {
+  margin: 0;
+  padding: 0; /* Ensure no padding is applied */
+  text-align: center; /* This can be kept if you want center text */
+  width: 100vw; /* Use viewport width instead of 100% */
+  height: 100vh; /* If you want it to take the full height as well */
+  box-sizing: border-box; /* Ensure padding and borders are included in total width/height */
+}
