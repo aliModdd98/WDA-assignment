@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import axiosInstance from "../config/axios";
+import { CircularProgress, Box } from "@mui/material";
 
 // Register Chart.js components
 ChartJS.register(
@@ -23,9 +24,11 @@ ChartJS.register(
 
 const RevenuePerMonth = () => {
   const [revenueData, setRevenueData] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const fetchRevenueData = async () => {
+      setLoading(true); // Start loading
       try {
         const response = await axiosInstance.get("/revenue-per-month", {
           params: { page: 1, pageSize: 10 },
@@ -34,6 +37,8 @@ const RevenuePerMonth = () => {
         setRevenueData(response.data.data);
       } catch (error) {
         console.error("Error fetching revenue data:", error);
+      } finally {
+        setLoading(false); // End loading
       }
     };
 
@@ -83,17 +88,26 @@ const RevenuePerMonth = () => {
   };
 
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         width: "100%",
+        maxWidth: "800px",
         maxHeight: "500px",
         padding: "20px",
-        marginBottom: "3rem",
+        margin: "3rem auto",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        flexDirection: "column",
       }}
     >
       <h2>Revenue per Month</h2>
-      <Bar data={data} options={options} height={400} />
-    </div>
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Bar data={data} options={options} height={400} />
+      )}
+    </Box>
   );
 };
 

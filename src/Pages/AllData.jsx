@@ -52,7 +52,7 @@ function AllData() {
   };
 
   return (
-    <Paper sx={{ margin: "2rem", padding: "1rem" }}>
+    <Paper sx={{ margin: "2rem auto", padding: "1rem", maxWidth: "900px" }}>
       <Typography variant="h4" sx={{ mb: 3, mt: 2 }}>
         All Data
       </Typography>

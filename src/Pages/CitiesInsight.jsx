@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import axiosInstance from "../config/axios";
+import { Box, CircularProgress } from "@mui/material";
 
 ChartJS.register(
   CategoryScale,
@@ -22,9 +23,11 @@ ChartJS.register(
 
 const RevenuePerCity = () => {
   const [cityData, setCityData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCityRevenueData = async () => {
+      setLoading(true); // Start loading
       try {
         const response = await axiosInstance.get("/revenue-per-city", {
           params: { page: 1, pageSize: 10 },
@@ -40,6 +43,8 @@ const RevenuePerCity = () => {
         setCityData(revenueData);
       } catch (error) {
         console.error("Error fetching city revenue data:", error);
+      } finally {
+        setLoading(false); // End loading
       }
     };
 
@@ -60,41 +65,57 @@ const RevenuePerCity = () => {
   };
 
   return (
-    <div style={{ width: "100%", maxHeight: "500px", padding: "20px" }}>
+    <Box
+      sx={{
+        width: "100%",
+        maxHeight: "500px",
+        padding: "1rem",
+        margin: "3rem auto",
+        maxWidth: "800px",
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <h2>Top Revenue by City</h2>
-      <Bar
-        data={data}
-        options={{
-          responsive: true,
-          maintainAspectRatio: false, // Makes it responsive within the fixed height
-          plugins: {
-            legend: {
-              position: "top",
-            },
-            title: {
-              display: true,
-              text: "Revenue per City",
-            },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
+      {loading ? (
+        <CircularProgress />
+      ) : (
+        <Bar
+          data={data}
+          options={{
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                position: "top",
+              },
               title: {
                 display: true,
-                text: "Revenue ($)",
+                text: "Revenue per City",
               },
             },
-            x: {
-              title: {
-                display: true,
-                text: "City",
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: "Revenue ($)",
+                },
+              },
+              x: {
+                title: {
+                  display: true,
+                  text: "City",
+                },
               },
             },
-          },
-        }}
-        height={400} // This controls the rendered height within the fixed container
-      />
-    </div>
+          }}
+          height={400}
+        />
+      )}
+    </Box>
   );
 };
 
