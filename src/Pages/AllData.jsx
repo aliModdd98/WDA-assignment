@@ -9,6 +9,8 @@ import {
   Paper,
   TablePagination,
   Typography,
+  CircularProgress,
+  Box,
 } from "@mui/material";
 import axiosInstance from "../config/axios";
 
@@ -17,10 +19,11 @@ function AllData() {
   const [totalItem, setTotalItem] = useState(0);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [loading, setLoading] = useState(false);
 
-  // Fetch data whenever page or pageSize changes
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true); // Start loading
       try {
         const response = await axiosInstance.get("/data", {
           params: {
@@ -32,6 +35,8 @@ function AllData() {
         setTotalItem(response.data.totalItem);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false); // End loading
       }
     };
     fetchData();
@@ -47,7 +52,7 @@ function AllData() {
   };
 
   return (
-    <Paper sx={{ margin: "2rem" }}>
+    <Paper sx={{ margin: "2rem", padding: "1rem" }}>
       <Typography variant="h4" sx={{ mb: 3, mt: 2 }}>
         All Data
       </Typography>
@@ -62,16 +67,31 @@ function AllData() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row) => (
-              <TableRow key={`${row.ORDERNUMBER}-${row.ORDERLINENUMBER}`}>
-                <TableCell>
-                  {row.CONTACTFIRSTNAME} {row.CONTACTLASTNAME}
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={4}>
+                  <Box
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    minHeight="200px"
+                  >
+                    <CircularProgress />
+                  </Box>
                 </TableCell>
-                <TableCell>{row.CITY}</TableCell>
-                <TableCell>{row.SALES.toFixed(2)}</TableCell>
-                <TableCell>{row.STATUS}</TableCell>
               </TableRow>
-            ))}
+            ) : (
+              data.map((row) => (
+                <TableRow key={`${row.ORDERNUMBER}-${row.ORDERLINENUMBER}`}>
+                  <TableCell>
+                    {row.CONTACTFIRSTNAME} {row.CONTACTLASTNAME}
+                  </TableCell>
+                  <TableCell>{row.CITY}</TableCell>
+                  <TableCell>{row.SALES.toFixed(2)}</TableCell>
+                  <TableCell>{row.STATUS}</TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
