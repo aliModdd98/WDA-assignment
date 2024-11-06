@@ -108,7 +108,14 @@ const UnitsSoldPerProduct = () => {
   };
 
   return (
-    <div style={{ width: "100%", padding: "20px" }}>
+    <div
+      style={{
+        width: "100%",
+        padding: "20px",
+        maxWidth: "900px",
+        margin: "0.9rem auto",
+      }}
+    >
       <h2>Units Sold Insights</h2>
       <UnitsSoldChart data={products} height={400} />
 
