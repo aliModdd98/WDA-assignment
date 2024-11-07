@@ -4,7 +4,14 @@ import "./Welcome.css";
 const WelcomePage = () => {
   const navigate = useNavigate();
 
-  const students = ["Student Name 1", "Student Name 2", "Student Name 3"];
+  // Updated students array with names and IDs
+  const students = [
+    "  ali_228133 علي محمد",
+    "ward_330831 ورد سلطان",
+    "wedian_321996 وديان الابراهيم",
+    "sara_328638 ساره حسن",
+    "souzan _331010 سوزان طيار",
+  ];
 
   const handleNavigate = () => {
     navigate("/results");
